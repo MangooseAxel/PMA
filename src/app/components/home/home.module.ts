@@ -6,6 +6,7 @@ import {IonicModule} from '@ionic/angular';
 
 import {HomeComponent} from './home.component';
 import {RouterModule, Routes} from '@angular/router';
+import {DrinksResolverService} from './home-resolver.service';
 
 const routes: Routes = [
     {
