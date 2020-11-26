@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title size="medium">HOME</ion-title>
+      <ion-buttons slot="end">
+         <ion-button>
+            <ion-icon slot="icon-only" name="search"></ion-icon>
+         </ion-button>
+      </ion-buttons>
+   </ion-toolbar>
+   <ion-toolbar id="search">
+      <ion-searchbar></ion-searchbar>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+   <ion-list>
+      <ion-card
+       *ngFor="let drink of drinks"
+      >
+         <ion-thumbnail>
+            <ion-img [src]="drink.strDrinkThumb"></ion-img>
+         </ion-thumbnail>
+         <ion-card-header>
+            <ion-card-title>
+               {{ drink.strDrink | uppercase }}
+            </ion-card-title>
+         </ion-card-header>
+         <ion-card-content>
+            <ion-card-content>
+               <ion-card-subtitle>
+                  Category: {{ drink.strCategory }}
+               </ion-card-subtitle>
+            </ion-card-content>
+         </ion-card-content>
+      </ion-card>
+   </ion-list>
+</ion-content>
