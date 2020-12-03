@@ -1,27 +1,30 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
-
+import {ReactiveFormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
-
 import {HomeComponent} from './home.component';
-import {RouterModule, Routes} from '@angular/router';
-
-const routes: Routes = [
-    {
-        path: '',
-        component: HomeComponent
-    }
-];
+import {IonicSelectableModule} from 'ionic-selectable';
+import {RouterModule} from '@angular/router';
+import {HomeResolver} from './home.resolver';
+import {FilterModalPage} from './filter-modal/filter-modal.page';
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule,
+        ReactiveFormsModule,
         IonicModule,
-        RouterModule.forChild(routes)
+        RouterModule.forChild([
+            {
+                path: '',
+                component: HomeComponent,
+                resolve: [HomeResolver]
+            }
+        ]),
+        IonicSelectableModule
     ],
-    declarations: [HomeComponent]
+    declarations: [
+        HomeComponent,
+        FilterModalPage]
 })
-export class FolderPageModule {
+export class HomeModule {
 }

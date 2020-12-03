@@ -1,0 +1,46 @@
+<ion-header translucent>
+   <ion-toolbar>
+      <ion-buttons slot="start">
+         <ion-button color="primary" (click)="dismiss()">
+            Cancel
+         </ion-button>
+      </ion-buttons>
+      <ion-title>Filter by ingredients</ion-title>
+      <ion-buttons slot="end">
+         <ion-button color="primary" (click)="onAcceptFilter()">
+            <ion-icon name="checkmark-outline"></ion-icon>
+         </ion-button>
+      </ion-buttons>
+   </ion-toolbar>
+   <ion-toolbar>
+      <form [formGroup]="form">
+         <ion-searchbar formControlName="search" placeholder="Search ingredients"></ion-searchbar>
+      </form>
+   </ion-toolbar>
+</ion-header>
+
+<ion-content>
+   <p *ngIf="(selectedIngredients$ | async).length > 0">Filter By:</p>
+   <ion-list *ngIf="(selectedIngredients$ | async).length > 0">
+      <ion-item *ngFor="let ingredient of selectedIngredients$ | async">
+         <ion-checkbox
+          [value]="ingredient"
+          (click)="onCheck($event)"
+          checked
+         ></ion-checkbox>
+         <ion-label>{{ingredient}}</ion-label>
+      </ion-item>
+   </ion-list>
+   <hr *ngIf="(selectedIngredients$ | async).length > 0">
+   <ion-list>
+      <ion-item
+       *ngFor="let ingredient of ingredients$ | async"
+      >
+         <ion-checkbox
+          [value]="ingredient"
+          (click)="onCheck($event)"
+         ></ion-checkbox>
+         <ion-label>{{ingredient}}</ion-label>
+      </ion-item>
+   </ion-list>
+</ion-content>

@@ -9,7 +9,7 @@ const routes: Routes = [
     },
     {
         path: 'home',
-        loadChildren: () => import('./components/home/home.module').then(m => m.FolderPageModule)
+        loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule)
     },
     {
         path: 'favorites',
