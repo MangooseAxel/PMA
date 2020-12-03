@@ -36,6 +36,7 @@ export function HomeReducer(
             return {
                 ...state,
                 ingredientsSelected: getIngredientsSelected(state, action.payload)
+                // ingredientsList: getIngredientsList(state, state.searchIngredient)
             };
         case HomeActions.FILTER_DRINKS:
             return {
@@ -48,12 +49,15 @@ export function HomeReducer(
 }
 
 function getIngredientsList(state: State, searchTxt: string) {
-    return searchTxt.length > 0
+    let filtered = searchTxt.length > 0
         ? [...IngredientsList.filter(item =>
             item.toLowerCase().includes(searchTxt.toLowerCase())
             && !state.ingredientsSelected.map(ingredient => ingredient.toLowerCase()).includes(item.toLowerCase()))
         ]
         : [...IngredientsList.filter(item => !state.ingredientsSelected.includes(item))];
+    console.log('selected: ' + state.ingredientsSelected);
+    console.log(filtered);
+    return filtered;
 }
 
 function getIngredientsSelected(state: State, payload: string) {

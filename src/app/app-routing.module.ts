@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
-import {DrinksResolverService} from './components/home/home-resolver.service';
 
 const routes: Routes = [
     {
