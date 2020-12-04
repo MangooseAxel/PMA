@@ -1,5 +1,7 @@
 {
   "name": "sidebar",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

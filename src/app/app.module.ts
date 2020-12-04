@@ -16,9 +16,11 @@ import {EffectsModule} from '@ngrx/effects';
 import {HomeEffects} from './components/home/store/home.effects';
 import {HttpClientModule} from '@angular/common/http';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
+import {Keyboard} from '@ionic-native/keyboard/ngx';
+import {DrinkComponent} from './components/drink/drink.component';
 
 @NgModule({
-    declarations: [AppComponent],
+    declarations: [AppComponent, DrinkComponent],
     entryComponents: [],
     imports: [
         BrowserModule,
@@ -33,7 +35,8 @@ import {StoreRouterConnectingModule} from '@ngrx/router-store';
     providers: [
         StatusBar,
         SplashScreen,
-        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
+        {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+        Keyboard
     ],
     bootstrap: [AppComponent]
 })

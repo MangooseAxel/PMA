@@ -11,6 +11,9 @@ export const SORT_INGREDIENTS = 'SORT_INGREDIENTS';
 
 export const UPDATE_FILTER = 'UPDATE_FILTER';
 export const FILTER_DRINKS = 'FILTER_DRINKS';
+export const CLEAN_FILTER = 'CLEAN_FILTER';
+
+export const UPDATE_SEARCH = 'UPDATE_SEARCH';
 
 export class FetchPopularDrinks implements Action {
     readonly type = FETCH_POPULAR_DRINKS;
@@ -52,6 +55,18 @@ export class UpdateFilter implements Action {
     }
 }
 
+export class CleanFilter implements Action {
+    readonly type = CLEAN_FILTER;
+}
+
+export class UpdateSearch implements Action {
+    readonly type = UPDATE_SEARCH;
+
+    constructor(public payload: string) {
+    }
+}
+
+
 export type HomeActions =
     | FetchPopularDrinks
     | FetchFilteredDrinks
@@ -59,4 +74,6 @@ export type HomeActions =
     | FilterDrinks
     | SetDrinks
     | SortIngredients
-    | UpdateFilter;
+    | UpdateFilter
+    | CleanFilter
+    | UpdateSearch;

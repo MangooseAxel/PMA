@@ -1,13 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Drink} from '../../models/drink.model';
-import {Store} from '@ngrx/store';
-import {Subscription} from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {Observable, Subscription} from 'rxjs';
 import * as fromApp from '../../store/app.reducer';
 import {map} from 'rxjs/operators';
-import {IngredientsList} from '../../models/ingredients.mockup';
-import {IonicSelectableComponent} from 'ionic-selectable';
 import {ModalController} from '@ionic/angular';
 import {FilterModalPage} from './filter-modal/filter-modal.page';
+import {FormControl, FormGroup} from '@angular/forms';
+import * as HomeActions from './store/home.actions';
+import {Keyboard} from '@ionic-native/keyboard/ngx';
 
 @Component({
     selector: 'app-folder',
@@ -15,17 +16,9 @@ import {FilterModalPage} from './filter-modal/filter-modal.page';
     styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-    drinks: Drink[];
+    drinks$: Observable<Drink[]>;
     subscription: Subscription;
-
-    // closed: boolean = true;
-
-    portChange(event: {
-        component: IonicSelectableComponent,
-        value: any
-    }) {
-        console.log('port:', event.value);
-    }
+    searchBar: FormGroup;
 
     async openModal() {
         const modal = await this.modalController.create({
@@ -39,20 +32,28 @@ export class HomeComponent implements OnInit {
         return await modal.present();
     }
 
+    onSubmit() {
+        this.store.dispatch(new HomeActions.FetchDrinks());
+        this.store.dispatch(new HomeActions.CleanFilter());
+        this.keyboard.hide();
+    }
 
     constructor(
         private store: Store<fromApp.AppState>,
-        public modalController: ModalController
+        public modalController: ModalController,
+        private keyboard: Keyboard
     ) {
+        this.searchBar = new FormGroup({
+            search: new FormControl()
+        });
     }
 
     ngOnInit() {
-        this.subscription = this.store
-            .select('home')
-            .pipe(map(homeState => homeState.drinks))
-            .subscribe((drinks: Drink[]) => {
-                this.drinks = drinks;
-            });
+        this.drinks$ = this.store.select('home').pipe(select('drinks'));
+
+        this.searchBar.valueChanges.subscribe(input => {
+            this.store.dispatch(new HomeActions.UpdateSearch(input.search));
+        });
     }
 
 }

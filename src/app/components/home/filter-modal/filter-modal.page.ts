@@ -1,22 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {FormControl, FormGroup} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
 import * as fromApp from '../../../store/app.reducer';
 import * as HomeActions from '../../home/store/home.actions';
-import {Observable} from 'rxjs';
-import {State} from '../store/home.reducer';
+import {Observable, Subscription} from 'rxjs';
 import {selectorIngredientsList, selectorIngredientsSelected} from '../../../store/app.reducer';
-import {switchMap, tap} from 'rxjs/operators';
+import {first, switchMap, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-filter-modal',
     templateUrl: './filter-modal.page.html',
     styleUrls: ['./filter-modal.page.css'],
 })
-export class FilterModalPage implements OnInit {
+export class FilterModalPage implements OnInit, OnDestroy {
     ingredients$: Observable<string[]>;
     selectedIngredients$: Observable<string[]>;
+    selectedIngredientsSubscription: Subscription;
     form: FormGroup;
 
     constructor(
@@ -46,11 +46,12 @@ export class FilterModalPage implements OnInit {
     }
 
     onAcceptFilter() {
-        this.selectedIngredients$
+        this.selectedIngredientsSubscription = this.selectedIngredients$
             .pipe(
                 switchMap((selectedIngredients: string[]) => {
                     return this.store.select('home').pipe(
                         select('searchDrink')).pipe(
+                        first(),
                         tap((search: string) => {
                             if (selectedIngredients.length > 0 && search.trim().length > 0) {
                                 this.store.dispatch(new HomeActions.FilterDrinks(selectedIngredients));
@@ -87,4 +88,7 @@ export class FilterModalPage implements OnInit {
         });
     }
 
+    ngOnDestroy() {
+        this.selectedIngredientsSubscription !== undefined ? this.selectedIngredientsSubscription.unsubscribe() : false;
+    }
 }

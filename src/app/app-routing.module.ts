@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {DrinkComponent} from './components/drink/drink.component';
 
 const routes: Routes = [
     {
@@ -14,7 +15,11 @@ const routes: Routes = [
     {
         path: 'favorites',
         loadChildren: () => import('./components/favorites/favorites.module').then(m => m.FavoritesModule)
-    }
+    },
+    {
+        path: 'drink/:id',
+        component: DrinkComponent
+    },
 ];
 
 @NgModule({

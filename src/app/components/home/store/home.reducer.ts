@@ -39,10 +39,22 @@ export function HomeReducer(
                 ...state,
                 ingredientsSelected: getIngredientsSelected(state, action.payload)
             };
+        case HomeActions.CLEAN_FILTER:
+            return {
+                ...state,
+                searchIngredient: '',
+                ingredientsList: [...IngredientsList],
+                ingredientsSelected: []
+            };
         case HomeActions.FILTER_DRINKS:
             return {
                 ...state,
                 drinks: getFilteredDrinks(state, action.payload)
+            };
+        case HomeActions.UPDATE_SEARCH:
+            return {
+                ...state,
+                searchDrink: String(action.payload)
             };
         default:
             return state;
