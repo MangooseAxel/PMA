@@ -7,6 +7,7 @@ import * as HomeActions from '../../home/store/home.actions';
 import {Observable} from 'rxjs';
 import {State} from '../store/home.reducer';
 import {selectorIngredientsList, selectorIngredientsSelected} from '../../../store/app.reducer';
+import {switchMap, tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-filter-modal',
@@ -45,11 +46,34 @@ export class FilterModalPage implements OnInit {
     }
 
     onAcceptFilter() {
-        this.selectedIngredients$.subscribe(data => {
-            data.length > 0
-                ? this.store.dispatch(new HomeActions.FilterDrinks(data))
-                : this.store.dispatch(new HomeActions.FetchPopularDrinks());
-        });
+        this.selectedIngredients$
+            .pipe(
+                switchMap((selectedIngredients: string[]) => {
+                    return this.store.select('home').pipe(
+                        select('searchDrink')).pipe(
+                        tap((search: string) => {
+                            if (selectedIngredients.length > 0 && search.trim().length > 0) {
+                                this.store.dispatch(new HomeActions.FilterDrinks(selectedIngredients));
+                            } else if (selectedIngredients.length > 0) {
+                                this.store.dispatch(new HomeActions.FetchFilteredDrinks());
+                            } else if (search.trim().length > 0) {
+                                // this.store.dispatch(new HomeActions.FetchDrinks());
+                            } else {
+                                this.store.dispatch(new HomeActions.FetchPopularDrinks());
+                            }
+                        })
+                    );
+                })
+            ).subscribe();
+        // .subscribe(selectedIngredients => {
+        //     selectedIngredients.length > 0
+        //         ? this.store.select('home').pipe(select('searchDrink'))
+        //             .subscribe(search => search.trim().length > 0
+        //                 ? this.store.dispatch(new HomeActions.FetchFilteredDrinks())
+        //                 : this.store.dispatch(new HomeActions.FilterDrinks(selectedIngredients)))
+        //         :
+        //         this.store.dispatch(new HomeActions.FetchPopularDrinks());
+        // });
         this.viewCtrl.dismiss({
             dismissed: true
         });

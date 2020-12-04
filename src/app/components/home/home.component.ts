@@ -17,7 +17,8 @@ import {FilterModalPage} from './filter-modal/filter-modal.page';
 export class HomeComponent implements OnInit {
     drinks: Drink[];
     subscription: Subscription;
-    closed: boolean = true;
+
+    // closed: boolean = true;
 
     portChange(event: {
         component: IonicSelectableComponent,
@@ -35,7 +36,6 @@ export class HomeComponent implements OnInit {
         modal.onDidDismiss().then(data => {
             console.log(data);
         });
-        
         return await modal.present();
     }
 
