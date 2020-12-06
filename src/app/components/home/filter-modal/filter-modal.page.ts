@@ -89,6 +89,8 @@ export class FilterModalPage implements OnInit, OnDestroy {
     }
 
     ngOnDestroy() {
-        this.selectedIngredientsSubscription !== undefined ? this.selectedIngredientsSubscription.unsubscribe() : false;
+        if (this.selectedIngredientsSubscription !== undefined) {
+            this.selectedIngredientsSubscription.unsubscribe();
+        }
     }
 }

@@ -1,0 +1,29 @@
+ion-card-title {
+  text-align: center;
+}
+
+ion-text {
+  text-align: right;
+  direction: revert;
+}
+
+p {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.list-ios {
+  background: unset;
+}
+
+.item-ios {
+  background: red;
+}
+
+ion-item .item-native {
+  background: transparent;
+}
+

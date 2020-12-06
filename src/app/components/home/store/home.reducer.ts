@@ -4,6 +4,7 @@ import {IngredientsList} from '../../../models/ingredients.mockup';
 
 export interface State {
     drinks: Drink[];
+    openedDrink: Drink;
     searchDrink: string;
     searchIngredient: string;
     ingredientsList: string[];
@@ -12,6 +13,7 @@ export interface State {
 
 const initialState: State = {
     drinks: [],
+    openedDrink: undefined,
     searchDrink: '',
     searchIngredient: '',
     ingredientsList: IngredientsList,
@@ -27,6 +29,22 @@ export function HomeReducer(
             return {
                 ...state,
                 drinks: [...action.payload]
+            };
+        case HomeActions.UPDATE_DRINKS:
+            return {
+                ...state,
+                drinks: [...state.drinks.map(drink => {
+                    if (drink.idDrink === action.payload.idDrink) {
+                        drink = {...action.payload};
+                    }
+                    return drink;
+                })],
+                openedDrink: {...action.payload}
+            };
+        case HomeActions.OPEN_DRINK:
+            return {
+                ...state,
+                openedDrink: {...state.drinks.filter(drink => drink.idDrink === action.payload)[0]}
             };
         case HomeActions.SORT_INGREDIENTS:
             return {

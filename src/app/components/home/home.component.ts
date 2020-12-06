@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     drinks$: Observable<Drink[]>;
     subscription: Subscription;
     searchBar: FormGroup;
+    @ViewChild('search') search: ElementRef;
 
     async openModal() {
         const modal = await this.modalController.create({
@@ -32,10 +33,19 @@ export class HomeComponent implements OnInit {
         return await modal.present();
     }
 
-    onSubmit() {
+    onSubmit(event) {
         this.store.dispatch(new HomeActions.FetchDrinks());
         this.store.dispatch(new HomeActions.CleanFilter());
-        this.keyboard.hide();
+        // this.keyboard.hide();
+        // alert('enter');
+        event.target.blur();
+        event.nativeElement.blur();
+        this.search.nativeElement.active();
+    }
+
+    onEnter(event) {
+        alert('enter');
+        event.nativeElement.blur();
     }
 
     constructor(
