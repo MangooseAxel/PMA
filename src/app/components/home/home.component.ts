@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
     drinks$: Observable<Drink[]>;
     subscription: Subscription;
     searchBar: FormGroup;
+    hideKeyboard;
     @ViewChild('search') search: ElementRef;
 
     async openModal() {
@@ -41,6 +42,7 @@ export class HomeComponent implements OnInit {
         event.target.blur();
         event.nativeElement.blur();
         this.search.nativeElement.active();
+        this.hideKeyboard = true;
     }
 
     onEnter(event) {

@@ -7,7 +7,6 @@ import {IonicSelectableModule} from 'ionic-selectable';
 import {RouterModule} from '@angular/router';
 import {HomeResolver} from './home.resolver';
 import {FilterModalPage} from './filter-modal/filter-modal.page';
-import {DrinkComponent} from '../drink/drink.component';
 
 @NgModule({
     imports: [
