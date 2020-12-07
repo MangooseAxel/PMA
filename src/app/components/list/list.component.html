@@ -1,0 +1,22 @@
+<ion-list>
+   <ion-card
+    *ngFor="let drink of drinks$ | async"
+    [routerLink]="['/drink', drink.idDrink]"
+   >
+      <ion-thumbnail>
+         <ion-img [src]="drink.strDrinkThumb"></ion-img>
+      </ion-thumbnail>
+      <ion-card-header>
+         <ion-card-title>
+            {{ drink.strDrink | uppercase }}
+         </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+         <ion-card-content>
+            <ion-card-subtitle>
+               Category: {{ drink.strCategory }}
+            </ion-card-subtitle>
+         </ion-card-content>
+      </ion-card-content>
+   </ion-card>
+</ion-list>

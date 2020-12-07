@@ -4,6 +4,7 @@ import {IngredientsList} from '../../../models/ingredients.mockup';
 
 export interface State {
     drinks: Drink[];
+    favoriteDrinks: Drink[];
     openedDrink: Drink;
     searchDrink: string;
     searchIngredient: string;
@@ -13,6 +14,7 @@ export interface State {
 
 const initialState: State = {
     drinks: [],
+    favoriteDrinks: [],
     openedDrink: undefined,
     searchDrink: '',
     searchIngredient: '',
@@ -30,6 +32,11 @@ export function HomeReducer(
                 ...state,
                 drinks: [...action.payload]
             };
+        case HomeActions.SET_FAVORITE_DRINKS:
+            return {
+                ...state,
+                favoriteDrinks: [...action.payload]
+            };
         case HomeActions.UPDATE_DRINKS:
             return {
                 ...state,
@@ -45,6 +52,13 @@ export function HomeReducer(
             return {
                 ...state,
                 openedDrink: {...state.drinks.filter(drink => drink.idDrink === action.payload)[0]}
+            };
+        case HomeActions.UPDATE_FAVORITE:
+            return {
+                ...state,
+                favoriteDrinks: (state.favoriteDrinks.includes(action.payload))
+                    ? [...state.favoriteDrinks.filter(drink => drink !== action.payload)]
+                    : [...state.favoriteDrinks, action.payload]
             };
         case HomeActions.SORT_INGREDIENTS:
             return {

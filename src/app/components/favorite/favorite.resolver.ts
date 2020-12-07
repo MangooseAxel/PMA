@@ -14,7 +14,7 @@ import * as HomeActions from '../home/store/home.actions';
 import {Drink} from '../../models/drink.model';
 
 @Injectable({providedIn: 'root'})
-export class HomeResolver implements Resolve<Drink[]> {
+export class FavoriteResolver implements Resolve<Drink[]> {
     constructor(
         private store: Store<fromApp.AppState>,
         private actions$: Actions
@@ -25,13 +25,13 @@ export class HomeResolver implements Resolve<Drink[]> {
         return this.store.select('home').pipe(
             first(),
             map(homeState => {
-                return homeState.drinks;
+                return homeState.favoriteDrinks;
             }),
-            switchMap(drinks => {
+            switchMap((drinks: Drink[]) => {
                 if (drinks.length === 0) {
-                    this.store.dispatch(new HomeActions.FetchPopularDrinks());
+                    this.store.dispatch(new HomeActions.FetchFavoriteDrinks());
                     return this.actions$.pipe(
-                        ofType(HomeActions.SET_DRINKS),
+                        ofType(HomeActions.SET_FAVORITE_DRINKS),
                         first(),
                     );
                 } else {

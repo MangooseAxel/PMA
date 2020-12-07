@@ -5,10 +5,14 @@ export const FETCH_POPULAR_DRINKS = 'FETCH_POPULAR_DRINKS';
 export const FETCH_DRINKS = 'FETCH_DRINKS';
 export const FETCH_DRINK = 'FETCH_DRINK';
 export const FETCH_FILTERED_DRINKS = 'FETCH_FILTERED_DRINKS';
+export const FETCH_FAVORITE_DRINKS = 'FETCH_FAVORITE_DRINKS';
 
 export const SET_DRINKS = 'SET_DRINKS';
+export const SET_FAVORITE_DRINKS = 'SET_FAVORITE_DRINKS';
 export const OPEN_DRINK = 'OPEN_DRINK';
 export const UPDATE_DRINKS = 'UPDATE_DRINKS';
+export const UPDATE_FAVORITE = 'UPDATE_FAVORITE';
+export const UPDATE_FAVORITE_END = 'UPDATE_FAVORITE_END';
 
 export const SORT_INGREDIENTS = 'SORT_INGREDIENTS';
 
@@ -37,6 +41,10 @@ export class FetchFilteredDrinks implements Action {
     readonly type = FETCH_FILTERED_DRINKS;
 }
 
+export class FetchFavoriteDrinks implements Action {
+    readonly type = FETCH_FAVORITE_DRINKS;
+}
+
 export class FilterDrinks implements Action {
     readonly type = FILTER_DRINKS;
 
@@ -46,6 +54,13 @@ export class FilterDrinks implements Action {
 
 export class SetDrinks implements Action {
     readonly type = SET_DRINKS;
+
+    constructor(public payload: Drink[]) {
+    }
+}
+
+export class SetFavoriteDrinks implements Action {
+    readonly type = SET_FAVORITE_DRINKS;
 
     constructor(public payload: Drink[]) {
     }
@@ -63,6 +78,17 @@ export class OpenDrink implements Action {
 
     constructor(public payload: string) {
     }
+}
+
+export class UpdateFavorite implements Action {
+    readonly type = UPDATE_FAVORITE;
+
+    constructor(public payload: Drink) {
+    }
+}
+
+export class UpdateFavoriteEnd implements Action {
+    readonly type = UPDATE_FAVORITE_END;
 }
 
 export class SortIngredients implements Action {
@@ -94,12 +120,16 @@ export class UpdateSearch implements Action {
 export type HomeActions =
     | FetchPopularDrinks
     | FetchFilteredDrinks
+    | FetchFavoriteDrinks
     | FetchDrinks
     | FetchDrink
     | FilterDrinks
     | SetDrinks
+    | SetFavoriteDrinks
     | UpdateDrinks
     | OpenDrink
+    | UpdateFavorite
+    | UpdateFavoriteEnd
     | SortIngredients
     | UpdateFilter
     | CleanFilter

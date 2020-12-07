@@ -14,33 +14,12 @@
       </ion-buttons>
    </ion-toolbar>
    <ion-toolbar id="search">
-      <form [formGroup]="searchBar" (ngSubmit)="onSubmit($event)">
-         <ion-searchbar hideKeyboard #search formControlName="search" placeholder="Search drinks" (keyup.enter)="onEnter($event)"></ion-searchbar>
+      <form [formGroup]="searchBar" (ngSubmit)="onSubmit()">
+         <ion-searchbar formControlName="search" placeholder="Search drinks"></ion-searchbar>
       </form>
    </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-   <ion-list>
-      <ion-card
-       *ngFor="let drink of drinks$ | async"
-       [routerLink]="['/drink', drink.idDrink]"
-      >
-         <ion-thumbnail>
-            <ion-img [src]="drink.strDrinkThumb"></ion-img>
-         </ion-thumbnail>
-         <ion-card-header>
-            <ion-card-title>
-               {{ drink.strDrink | uppercase }}
-            </ion-card-title>
-         </ion-card-header>
-         <ion-card-content>
-            <ion-card-content>
-               <ion-card-subtitle>
-                  Category: {{ drink.strCategory }}
-               </ion-card-subtitle>
-            </ion-card-content>
-         </ion-card-content>
-      </ion-card>
-   </ion-list>
+   <app-list [drinks$]="drinks$"></app-list>
 </ion-content>

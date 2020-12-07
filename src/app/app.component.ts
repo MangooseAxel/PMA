@@ -18,8 +18,8 @@ export class AppComponent implements OnInit {
             icon: 'mail'
         },
         {
-            title: 'Favorites',
-            url: '/favorites',
+            title: 'Favorite',
+            url: '/favorite',
             icon: 'heart'
         }
     ];

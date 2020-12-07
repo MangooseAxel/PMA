@@ -15,6 +15,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {select, Store} from '@ngrx/store';
 import * as fromApp from '../../../store/app.reducer';
+import {Storage} from '@ionic/storage';
 
 @Injectable()
 export class HomeEffects {
@@ -185,11 +186,42 @@ export class HomeEffects {
         })
     );
 
+    @Effect()
+    updateFavoriteDrinks = this.actions$.pipe(
+        ofType(HomeActions.UPDATE_FAVORITE),
+        switchMap(() => {
+            return this.store.select('home').pipe(
+                first(),
+                select('favoriteDrinks')
+            );
+        }),
+        map((drinks: Drink[]) => {
+            console.log(drinks);
+            console.log(JSON.stringify(drinks));
+            this.storage.set('favoriteDrinks', JSON.stringify(drinks));
+            return new HomeActions.UpdateFavoriteEnd();
+        })
+    );
+
+    @Effect()
+    fetchFavoriteDrinks = this.actions$.pipe(
+        ofType(HomeActions.FETCH_FAVORITE_DRINKS),
+        switchMap(() => {
+            return this.storage.get('favoriteDrinks').then(drinks => {
+                return JSON.parse(drinks);
+            });
+        }),
+        map((drinks: Drink[]) => {
+            return new HomeActions.SetFavoriteDrinks(drinks);
+        })
+    );
+
 
     constructor(
         private actions$: Actions,
         private http: HttpClient,
-        private store: Store<fromApp.AppState>
+        private store: Store<fromApp.AppState>,
+        private storage: Storage
     ) {
     }
 }

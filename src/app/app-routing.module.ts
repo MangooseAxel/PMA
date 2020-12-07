@@ -13,8 +13,8 @@ const routes: Routes = [
         loadChildren: () => import('./components/home/home.module').then(m => m.HomeModule)
     },
     {
-        path: 'favorites',
-        loadChildren: () => import('./components/favorites/favorites.module').then(m => m.FavoritesModule)
+        path: 'favorite',
+        loadChildren: () => import('./components/favorite/favorite.module').then(m => m.FavoriteModule)
     },
     {
         path: 'drink/:id',

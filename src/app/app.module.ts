@@ -18,6 +18,7 @@ import {HttpClientModule} from '@angular/common/http';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {Keyboard} from '@ionic-native/keyboard/ngx';
 import {DrinkComponent} from './components/drink/drink.component';
+import {IonicStorageModule} from '@ionic/storage';
 
 @NgModule({
     declarations: [AppComponent, DrinkComponent],
@@ -30,7 +31,8 @@ import {DrinkComponent} from './components/drink/drink.component';
         StoreModule.forRoot(fromApp.appReducer),
         EffectsModule.forRoot([HomeEffects]),
         StoreDevtoolsModule.instrument({logOnly: environment.production}),
-        StoreRouterConnectingModule.forRoot()
+        StoreRouterConnectingModule.forRoot(),
+        IonicStorageModule.forRoot()
     ],
     providers: [
         StatusBar,

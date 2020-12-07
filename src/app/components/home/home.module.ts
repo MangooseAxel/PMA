@@ -7,8 +7,14 @@ import {IonicSelectableModule} from 'ionic-selectable';
 import {RouterModule} from '@angular/router';
 import {HomeResolver} from './home.resolver';
 import {FilterModalPage} from './filter-modal/filter-modal.page';
+import {ListComponent} from '../list/list.component';
 
 @NgModule({
+    declarations: [
+        HomeComponent,
+        FilterModalPage,
+        ListComponent
+    ],
     imports: [
         CommonModule,
         ReactiveFormsModule,
@@ -23,9 +29,9 @@ import {FilterModalPage} from './filter-modal/filter-modal.page';
         ]),
         IonicSelectableModule
     ],
-    declarations: [
-        HomeComponent,
-        FilterModalPage]
+    exports: [
+        ListComponent
+    ]
 })
 export class HomeModule {
 }
