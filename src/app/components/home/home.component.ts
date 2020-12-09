@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, Renderer2, ViewChild, ViewRef} from '@angular/core';
 import {Drink} from '../../models/drink.model';
 import {select, Store} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
 import * as fromApp from '../../store/app.reducer';
-import {ModalController} from '@ionic/angular';
+import {IonSearchbar, ModalController} from '@ionic/angular';
 import {FilterModalPage} from './filter-modal/filter-modal.page';
 import {FormControl, FormGroup} from '@angular/forms';
 import * as HomeActions from './store/home.actions';
@@ -17,6 +17,8 @@ export class HomeComponent implements OnInit {
     drinks$: Observable<Drink[]>;
     subscription: Subscription;
     searchBar: FormGroup;
+    hideSearch = true;
+    @ViewChild('search') search: IonSearchbar;
 
     async openModal() {
         const modal = await this.modalController.create({
@@ -30,9 +32,16 @@ export class HomeComponent implements OnInit {
         return await modal.present();
     }
 
-    onSubmit() {
+    openSearch() {
+        this.hideSearch = !this.hideSearch;
+    }
+
+
+    onSubmit(search) {
         this.store.dispatch(new HomeActions.FetchDrinks());
         this.store.dispatch(new HomeActions.CleanFilter());
+        this.hideSearch = true;
+        console.log(this.search.getInputElement().then(element => element.blur()));
     }
 
     constructor(

@@ -82,9 +82,6 @@ export class OpenDrink implements Action {
 
 export class UpdateFavorite implements Action {
     readonly type = UPDATE_FAVORITE;
-
-    constructor(public payload: Drink) {
-    }
 }
 
 export class UpdateFavoriteEnd implements Action {

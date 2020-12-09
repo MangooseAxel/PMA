@@ -7,13 +7,12 @@ import {IonicSelectableModule} from 'ionic-selectable';
 import {RouterModule} from '@angular/router';
 import {HomeResolver} from './home.resolver';
 import {FilterModalPage} from './filter-modal/filter-modal.page';
-import {ListComponent} from '../list/list.component';
+import {SharedModule} from '../../shared.module';
 
 @NgModule({
     declarations: [
         HomeComponent,
-        FilterModalPage,
-        ListComponent
+        FilterModalPage
     ],
     imports: [
         CommonModule,
@@ -27,11 +26,10 @@ import {ListComponent} from '../list/list.component';
                 resolve: [HomeResolver]
             }
         ]),
-        IonicSelectableModule
+        IonicSelectableModule,
+        SharedModule
     ],
-    exports: [
-        ListComponent
-    ]
+    exports: []
 })
 export class HomeModule {
 }

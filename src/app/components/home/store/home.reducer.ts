@@ -53,13 +53,6 @@ export function HomeReducer(
                 ...state,
                 openedDrink: {...state.drinks.filter(drink => drink.idDrink === action.payload)[0]}
             };
-        case HomeActions.UPDATE_FAVORITE:
-            return {
-                ...state,
-                favoriteDrinks: (state.favoriteDrinks.includes(action.payload))
-                    ? [...state.favoriteDrinks.filter(drink => drink !== action.payload)]
-                    : [...state.favoriteDrinks, action.payload]
-            };
         case HomeActions.SORT_INGREDIENTS:
             return {
                 ...state,

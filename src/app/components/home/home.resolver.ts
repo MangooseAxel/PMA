@@ -30,8 +30,9 @@ export class HomeResolver implements Resolve<Drink[]> {
             switchMap(drinks => {
                 if (drinks.length === 0) {
                     this.store.dispatch(new HomeActions.FetchPopularDrinks());
+                    this.store.dispatch(new HomeActions.FetchFavoriteDrinks());
                     return this.actions$.pipe(
-                        ofType(HomeActions.SET_DRINKS),
+                        ofType(HomeActions.SET_DRINKS && HomeActions.SET_FAVORITE_DRINKS),
                         first(),
                     );
                 } else {

@@ -15,7 +15,7 @@ export class DrinkComponent implements OnInit {
     drink: Drink;
 
     onLike() {
-        this.store.dispatch(new HomeActions.UpdateFavorite(this.drink));
+        this.store.dispatch(new HomeActions.UpdateFavorite());
     }
 
 

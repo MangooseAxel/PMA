@@ -3,24 +3,22 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 import {FavoriteComponent} from './favorite.component';
-import {RouterModule, Routes} from '@angular/router';
-import {ListComponent} from '../list/list.component';
-import {FavoriteResolver} from './favorite.resolver';
+import {RouterModule} from '@angular/router';
+import {SharedModule} from '../../shared.module';
 
 @NgModule({
     declarations: [
-        FavoriteComponent,
-        ListComponent],
+        FavoriteComponent],
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
+        SharedModule,
         RouterModule.forChild([
             {
                 path: '',
                 pathMatch: 'full',
-                component: FavoriteComponent,
-                resolve: [FavoriteResolver]
+                component: FavoriteComponent
             }
         ]),
     ]

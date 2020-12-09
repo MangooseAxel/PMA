@@ -8,14 +8,14 @@
          <ion-button (click)="openModal()">
             <ion-icon name="funnel-outline"></ion-icon>
          </ion-button>
-         <ion-button>
+         <ion-button (click)="openSearch()">
             <ion-icon slot="icon-only" name="search"></ion-icon>
          </ion-button>
       </ion-buttons>
    </ion-toolbar>
-   <ion-toolbar id="search">
-      <form [formGroup]="searchBar" (ngSubmit)="onSubmit()">
-         <ion-searchbar formControlName="search" placeholder="Search drinks"></ion-searchbar>
+   <ion-toolbar id="search" [class.ion-hide]="hideSearch">
+      <form [formGroup]="searchBar" (ngSubmit)="onSubmit(search)">
+         <ion-searchbar #search formControlName="search" placeholder="Search drinks"></ion-searchbar>
       </form>
    </ion-toolbar>
 </ion-header>

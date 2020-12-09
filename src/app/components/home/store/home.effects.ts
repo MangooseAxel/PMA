@@ -1,6 +1,6 @@
 import {Actions, Effect, ofType} from '@ngrx/effects';
 import * as HomeActions from './home.actions';
-import {delay, first, map, switchMap, take, tap} from 'rxjs/operators';
+import {combineAll, concatAll, concatMap, delay, first, map, switchMap, take, tap} from 'rxjs/operators';
 import {
     Drink,
     DaiquiriMockup,
@@ -10,7 +10,7 @@ import {
     Ingredient,
     Belmont
 } from '../../../models/drink.model';
-import {of} from 'rxjs';
+import {concat, forkJoin, of, combineLatest, merge} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {select, Store} from '@ngrx/store';
@@ -192,14 +192,19 @@ export class HomeEffects {
         switchMap(() => {
             return this.store.select('home').pipe(
                 first(),
-                select('favoriteDrinks')
+                map(state => {
+                    return state.favoriteDrinks.length > 0
+                        ? !!state.favoriteDrinks.find(x => x.idDrink === state.openedDrink.idDrink)
+                            ? [...state.favoriteDrinks
+                                .filter(drink => drink.idDrink !== state.openedDrink.idDrink)]
+                            : [...state.favoriteDrinks, state.openedDrink]
+                        : [state.openedDrink];
+                })
             );
         }),
-        map((drinks: Drink[]) => {
-            console.log(drinks);
-            console.log(JSON.stringify(drinks));
+        map(drinks => {
             this.storage.set('favoriteDrinks', JSON.stringify(drinks));
-            return new HomeActions.UpdateFavoriteEnd();
+            return new HomeActions.SetFavoriteDrinks(drinks);
         })
     );
 
@@ -212,7 +217,7 @@ export class HomeEffects {
             });
         }),
         map((drinks: Drink[]) => {
-            return new HomeActions.SetFavoriteDrinks(drinks);
+            return new HomeActions.SetFavoriteDrinks(drinks === null ? [] : drinks);
         })
     );
 

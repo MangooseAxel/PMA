@@ -19,6 +19,7 @@ import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {Keyboard} from '@ionic-native/keyboard/ngx';
 import {DrinkComponent} from './components/drink/drink.component';
 import {IonicStorageModule} from '@ionic/storage';
+import {ServiceWorkerModule} from '@angular/service-worker';
 
 @NgModule({
     declarations: [AppComponent, DrinkComponent],
@@ -32,7 +33,8 @@ import {IonicStorageModule} from '@ionic/storage';
         EffectsModule.forRoot([HomeEffects]),
         StoreDevtoolsModule.instrument({logOnly: environment.production}),
         StoreRouterConnectingModule.forRoot(),
-        IonicStorageModule.forRoot()
+        IonicStorageModule.forRoot(),
+        ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
     providers: [
         StatusBar,
